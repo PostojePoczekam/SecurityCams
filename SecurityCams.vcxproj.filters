@@ -80,6 +80,9 @@
     <ClCompile Include="CamerasManager.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
+    <ClCompile Include="SettingsContainer.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="mainwindow.h">
@@ -102,6 +105,9 @@
       <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="CamerasManager.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SettingsContainer.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>

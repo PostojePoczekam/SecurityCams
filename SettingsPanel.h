@@ -25,6 +25,7 @@ private slots:
 	void setSensitivity(int);
 	void browseSavePath();
 	void setSavePath(QString);
+	void setResolution(int);
 
 };
 

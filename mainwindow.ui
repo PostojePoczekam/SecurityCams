@@ -63,7 +63,7 @@
        </size>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="cameras">
        <attribute name="title">
@@ -152,10 +152,15 @@
            </spacer>
           </item>
           <item>
-           <widget class="QComboBox" name="comboBox">
+           <widget class="QComboBox" name="resolutionComboBox">
             <item>
              <property name="text">
-              <string>720p</string>
+              <string>240p</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>360p</string>
              </property>
             </item>
             <item>
@@ -165,12 +170,12 @@
             </item>
             <item>
              <property name="text">
-              <string>320p</string>
+              <string>600p</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>240p</string>
+              <string>720p</string>
              </property>
             </item>
            </widget>

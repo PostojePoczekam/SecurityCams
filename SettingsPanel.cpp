@@ -2,6 +2,8 @@
 #include <qfiledialog.h>
 
 #include "SettingsPanel.h"
+#include "SettingsContainer.h"
+#include <QDir>
 
 SettingsPanel::SettingsPanel(Ui::MainWindow* ui)
 	: QObject(nullptr)
@@ -13,6 +15,7 @@ SettingsPanel::~SettingsPanel()
 
 void SettingsPanel::setup()
 {
+	m_ui->savePath->setText(QDir::currentPath());
 	connect(
 		m_ui->sensitivitySlider,
 		SIGNAL(valueChanged(int)),
@@ -30,11 +33,17 @@ void SettingsPanel::setup()
 		SIGNAL(textChanged(QString)),
 		this,
 		SLOT(setSavePath(QString)));
+
+	connect(
+		m_ui->resolutionComboBox,
+		SIGNAL(currentIndexChanged(int)),
+		this,
+		SLOT(setResolution(int)));
 }
 
 void SettingsPanel::setSensitivity(int value)
 {
-
+	SettingsContainer::get()->setSensitivity(value);
 }
 
 void SettingsPanel::browseSavePath()
@@ -49,5 +58,15 @@ void SettingsPanel::browseSavePath()
 
 void SettingsPanel::setSavePath(QString dir)
 {
+	QFileInfo fi(dir);
+	bool isDirValid = (fi.isDir() && fi.isWritable());
+	if (isDirValid)
+		SettingsContainer::get()->setSavePath(dir);
 
+}
+
+void SettingsPanel::setResolution(int resolutionIndex)
+{
+	int resolution = 240 + 120 * resolutionIndex;
+	SettingsContainer::get()->setResolution(resolution);
 }

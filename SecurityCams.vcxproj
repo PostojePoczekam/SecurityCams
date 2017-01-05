@@ -160,6 +160,7 @@
     </ClCompile>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mainwindow.cpp" />
+    <ClCompile Include="SettingsContainer.cpp" />
     <ClCompile Include="SettingsPanel.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -189,6 +190,7 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SettingsContainer.h" />
     <CustomBuild Include="CamerasPanel.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing CamerasPanel.h...</Message>
