@@ -2,7 +2,6 @@
 #define CAMERAS_MANAGER_H
 
 #include <QStringList>
-#include <windows.h>
 
 class CamerasManager
 {
