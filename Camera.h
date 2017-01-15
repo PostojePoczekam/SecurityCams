@@ -19,6 +19,7 @@ private:
 
 private:
 	int m_index;
+	int m_framesLeft;
 	QString m_name;
 	std::thread* m_thread;
 	cv::VideoCapture m_videoCapture;

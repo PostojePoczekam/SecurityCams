@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+//*****************************************************************************
 MainWindow::MainWindow(QWidget *parent)
 	:QMainWindow(parent)
 	, m_ui(new Ui::MainWindow)
@@ -11,11 +12,13 @@ MainWindow::MainWindow(QWidget *parent)
 	setup();
 }
 
+//*****************************************************************************
 MainWindow::~MainWindow()
 {
 	delete m_ui;
 }
 
+//*****************************************************************************
 void MainWindow::setup()
 {
 	m_camerasPanel = new CamerasPanel(m_ui);

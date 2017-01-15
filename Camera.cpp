@@ -5,10 +5,13 @@
 #include <QDebug>
 
 #define ASPECT_RATIO 4.f/3.f
+#define FRAMES2RECORD 50
+#define FRAMERATE 10
 
 //*****************************************************************************
 Camera::Camera(int index, QString name)
 	: m_index(index)
+	, m_framesLeft(FRAMES2RECORD)
 	, m_name(name)
 {
 	m_thread = new std::thread(&Camera::proceedFrame, this);
@@ -27,8 +30,8 @@ void Camera::proceedFrame()
 	m_videoCapture.open(m_index);
 	if (!m_videoCapture.isOpened())
 		return;
-	bool heightSet = m_videoCapture.set(CV_CAP_PROP_FRAME_HEIGHT, SettingsContainer::get()->getResolution());
-	bool widthSet = m_videoCapture.set(CV_CAP_PROP_FRAME_WIDTH, SettingsContainer::get()->getResolution()*ASPECT_RATIO);
+	m_videoCapture.set(CV_CAP_PROP_FRAME_HEIGHT, SettingsContainer::get()->getResolution());
+	m_videoCapture.set(CV_CAP_PROP_FRAME_WIDTH, SettingsContainer::get()->getResolution()*ASPECT_RATIO);
 	bool recording = false;
 	cv::namedWindow(m_name.toStdString(), cv::WINDOW_AUTOSIZE);
 
@@ -36,14 +39,28 @@ void Camera::proceedFrame()
 	{
 		if (!IsWindowVisible((HWND)cvGetWindowHandle(m_name.toStdString().c_str())))
 		{
+			if (recording)
+				m_videoWriter.release();
 			cv::destroyWindow(m_name.toStdString());
 			delete this;
 			break;
 		}
 		if (recording)
 		{
-			m_videoCapture >> m_outputFrame;
-			imshow(m_name.toStdString(), m_outputFrame);
+			if (m_framesLeft != 0)
+			{
+				m_videoCapture >> m_outputFrame;
+				m_videoWriter.write(m_outputFrame);
+				imshow(m_name.toStdString(), m_outputFrame);
+				m_framesLeft--;
+			}
+			else
+			{
+				qDebug() << "recorded!";
+				m_videoWriter.release();
+				recording = false;
+				m_framesLeft = FRAMES2RECORD;
+			}
 		}
 		else
 		{
@@ -66,19 +83,17 @@ void Camera::proceedFrame()
 			}
 			imshow(m_name.toStdString(), m_outputFrame);
 		}
-		cv::waitKey(100);
+		cv::waitKey(1000 / FRAMERATE);
 	}
 }
 
 //*****************************************************************************
 void Camera::createOutputFile()
 {
-	int fourcc = CV_FOURCC('M', 'J', 'P', 'G');
-	QString filename = SettingsContainer::get()->getSavePath() + QString("/") + QDateTime::currentDateTime().toString() + QString(".avi");
+	int fourcc = CV_FOURCC('M', 'P', 'E', 'G');
+	QString filename = SettingsContainer::get()->getSavePath() + QString("/") + QDateTime::currentDateTime().toString("yyyyMMddhhmmss") + QString(".mp4");
 	cv::Size frameSize = cv::Size(m_outputFrame.cols, m_outputFrame.rows);
-	m_videoWriter.open(filename.toStdString(), fourcc, 24, frameSize, true);
+	m_videoWriter.open(filename.toStdString(), fourcc, FRAMERATE, frameSize, true);
 	if (m_videoWriter.isOpened())
-		qDebug() << "ready!";
-	else
-		qDebug() << "nope";
+		qDebug() << "detected!";
 }

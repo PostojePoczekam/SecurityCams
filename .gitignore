@@ -5,7 +5,6 @@
 /.vs
 /debug
 /x64
-/libs
 *.slo
 *.lo
 *.o
@@ -13,7 +12,6 @@
 *.la
 *.lai
 *.so
-*.dll
 *.dylib
 
 # Qt-es
