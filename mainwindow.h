@@ -27,6 +27,8 @@ private:
 
 private:
 	void setup();
+	private slots:
+	void tabChanged(int);
 };
 
 #endif // MAINWINDOW_H

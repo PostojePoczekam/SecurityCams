@@ -17,7 +17,7 @@ public:
 	CamerasPanel(Ui::MainWindow*);
 	~CamerasPanel();
 	void setup();
-	void reloadCameras(const QStringList&);
+	void reloadCameras();
 
 private:
 	Ui::MainWindow* m_ui;

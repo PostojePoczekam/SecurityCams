@@ -49,11 +49,13 @@ void SettingsPanel::setSensitivity(int value)
 void SettingsPanel::browseSavePath()
 {
 	QString dir = QFileDialog::getExistingDirectory(
-		nullptr, tr("Open Directory"),
-		"/home",
-		QFileDialog::ShowDirsOnly
-		| QFileDialog::DontResolveSymlinks);
-	m_ui->savePath->setText(dir);
+		nullptr, tr("Open Directory"), "/home",
+		QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+	if (dir.isEmpty() || dir.isNull())
+		m_ui->savePath->setText(QDir::currentPath());
+	else
+		m_ui->savePath->setText(dir);
+
 }
 
 void SettingsPanel::setSavePath(QString dir)
@@ -62,6 +64,8 @@ void SettingsPanel::setSavePath(QString dir)
 	bool isDirValid = (fi.isDir() && fi.isWritable());
 	if (isDirValid)
 		SettingsContainer::get()->setSavePath(dir);
+	else
+		SettingsContainer::get()->setSavePath(QDir::currentPath());
 
 }
 

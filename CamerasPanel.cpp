@@ -15,7 +15,7 @@ CamerasPanel::~CamerasPanel()
 //*****************************************************************************
 void CamerasPanel::setup()
 {
-	reloadCameras(CamerasManager::get()->getCamerasList());
+	reloadCameras();
 	connect(
 		m_ui->camerasList,
 		SIGNAL(itemDoubleClicked(QListWidgetItem*)),
@@ -24,9 +24,10 @@ void CamerasPanel::setup()
 }
 
 //*****************************************************************************
-void CamerasPanel::reloadCameras(const QStringList& camerasList)
+void CamerasPanel::reloadCameras()
 {
-	for (QString camera : camerasList)
+	m_ui->camerasList->clear();
+	for (QString camera : CamerasManager::get()->getCamerasList())
 	{
 		m_ui->camerasList->addItem(camera);
 	}

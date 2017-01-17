@@ -51,6 +51,7 @@ void Camera::proceedFrame()
 			{
 				m_videoCapture >> m_outputFrame;
 				m_videoWriter.write(m_outputFrame);
+				cv::circle(m_outputFrame, cv::Point(30, 30), 10, cv::Scalar(0, 0, 255), -1);
 				imshow(m_name.toStdString(), m_outputFrame);
 				m_framesLeft--;
 			}

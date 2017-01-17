@@ -3,6 +3,7 @@
 #include "CamerasPanel.h"
 #include "SettingsPanel.h"
 #include "RecordingsPanel.h"
+#include <qdebug.h>
 
 //*****************************************************************************
 MainWindow::MainWindow(QWidget *parent)
@@ -25,10 +26,32 @@ MainWindow::~MainWindow()
 //*****************************************************************************
 void MainWindow::setup()
 {
+	connect(
+		m_ui->tabWidget,
+		SIGNAL(currentChanged(int)),
+		this,
+		SLOT(tabChanged(int))
+	);
 	m_camerasPanel = new CamerasPanel(m_ui);
 	m_settingsPanel = new SettingsPanel(m_ui);
 	m_recordingsPanel = new RecordingsPanel(m_ui);
 	m_camerasPanel->setup();
 	m_settingsPanel->setup();
 	m_recordingsPanel->setup();
+}
+
+//*****************************************************************************
+void MainWindow::tabChanged(int index)
+{
+	switch (index)
+	{
+	case(0):
+		m_camerasPanel->reloadCameras();
+		break;
+	case(2):
+		m_recordingsPanel->reloadRecordings();
+		break;
+	default:
+		break;
+	}
 }
