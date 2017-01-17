@@ -2,8 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "CamerasPanel.h"
-#include "SettingsPanel.h"
 
 namespace Ui
 {
@@ -11,6 +9,7 @@ namespace Ui
 }
 class CamerasPanel;
 class SettingsPanel;
+class RecordingsPanel;
 
 class MainWindow : public QMainWindow
 {
@@ -24,6 +23,7 @@ private:
 	Ui::MainWindow *m_ui;
 	CamerasPanel* m_camerasPanel;
 	SettingsPanel* m_settingsPanel;
+	RecordingsPanel* m_recordingsPanel;
 
 private:
 	void setup();

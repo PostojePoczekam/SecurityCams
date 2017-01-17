@@ -29,3 +29,5 @@ ui_*.h
 Makefile*
 *build-*
 
+/release
+/*.TMP
